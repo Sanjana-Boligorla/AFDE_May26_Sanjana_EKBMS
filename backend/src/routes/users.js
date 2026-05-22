@@ -1,7 +1,7 @@
 const express = require('express');
 const { body } = require('express-validator');
 const router  = express.Router();
-const { listUsers, getUser, createUser, updateUserRole, toggleUserStatus, listRoles } = require('../controllers/userController');
+const { listUsers, getUser, createUser, updateUser, updateUserRole, toggleUserStatus, listRoles } = require('../controllers/userController');
 const { protect, authorize } = require('../middleware/auth');
 const validate = require('../middleware/validate');
 
@@ -17,6 +17,7 @@ router.get('/roles',          protect, listRoles);
 router.get('/',               protect, authorize('admin'), listUsers);
 router.get('/:id',            protect, authorize('admin'), getUser);
 router.post('/',              protect, authorize('admin'), createUserRules, validate, createUser);
+router.put('/:id',            protect, authorize('admin'), updateUser);
 router.put('/:id/role',       protect, authorize('admin'), updateUserRole);
 router.put('/:id/toggle',     protect, authorize('admin'), toggleUserStatus);
 

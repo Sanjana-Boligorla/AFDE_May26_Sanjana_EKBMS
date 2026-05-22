@@ -114,4 +114,26 @@ const listRoles = async (_req, res, next) => {
   } catch (err) { next(err); }
 };
 
-module.exports = { listUsers, getUser, createUser, updateUserRole, toggleUserStatus, listRoles };
+
+// PUT /api/users/:id  (admin update user details, role, active status)
+const updateUser = async (req, res, next) => {
+  try {
+    const { role_id, is_active, department, job_title } = req.body;
+    const [rows] = await pool.query('SELECT id FROM users WHERE id = ?', [req.params.id]);
+    if (rows.length === 0) return sendError(res, 'User not found.', 404);
+
+    const updates = [];
+    const values = [];
+    if (role_id !== undefined)    { updates.push('role_id = ?');    values.push(Number(role_id)); }
+    if (is_active !== undefined)  { updates.push('is_active = ?');  values.push(Boolean(is_active)); }
+    if (department !== undefined) { updates.push('department = ?'); values.push(department || null); }
+    if (job_title !== undefined)  { updates.push('job_title = ?');  values.push(job_title || null); }
+
+    if (updates.length === 0) return sendError(res, 'No fields to update.', 400);
+    values.push(req.params.id);
+    await pool.query(`UPDATE users SET ${updates.join(', ')} WHERE id = ?`, values);
+    return sendSuccess(res, null, 'User updated.');
+  } catch (err) { next(err); }
+};
+
+module.exports = { listUsers, getUser, createUser, updateUser, updateUserRole, toggleUserStatus, listRoles };

@@ -347,13 +347,13 @@ const submitForReview = async (req, res, next) => {
 
     await pool.query(
       `INSERT INTO approval_workflows
-         (article_id, submitted_by, status, author_note, version_at_submit)
-       VALUES (?, ?, 'pending', ?, ?)
+         (article_id, submitted_by, status, author_note)
+       VALUES (?, ?, 'pending', ?)
        ON DUPLICATE KEY UPDATE
          status = 'pending', author_note = VALUES(author_note),
          submitted_at = NOW(), reviewed_at = NULL, reviewer_id = NULL,
          reviewer_comment = NULL`,
-      [id, req.user.id, note || null, article.version_number]
+      [id, req.user.id, note || null]
     );
 
     // Notify all reviewers
