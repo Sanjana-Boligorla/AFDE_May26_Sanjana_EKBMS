@@ -25,6 +25,8 @@ import UserManagement     from './pages/admin/UserManagement';
 import TagManagement      from './pages/admin/TagManagement';
 import NotificationsPage  from './pages/notifications/NotificationsPage';
 import NotFound           from './pages/NotFound';
+import AnalyticsDashboard from './pages/analytics/AnalyticsDashboard';
+import EtlJobManager      from './pages/analytics/EtlJobManager';
 import Profile            from './pages/auth/Profile';
 
 // Route guards
@@ -94,6 +96,8 @@ function AppRoutes() {
         <Route path="notifications" element={<NotificationsPage />} />
       </Route>
 
+      <Route path="analytics" element={<RoleRoute roles={['admin','reviewer']}><AnalyticsDashboard /></RoleRoute>} />
+      <Route path="etl-jobs"   element={<RoleRoute roles={['admin']}><EtlJobManager /></RoleRoute>} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

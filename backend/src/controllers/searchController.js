@@ -69,6 +69,15 @@ const search = async (req, res, next) => {
 
     const data = articles.map(r => ({ ...r, tags: r.tags ? r.tags.split(',') : [] }));
 
+    // Track search query (fire-and-forget)
+    pool.query(
+      `INSERT INTO search_analytics (query, results_count, user_id, session_id, category_filter, tag_filter)
+       VALUES (?, ?, ?, ?, ?, ?)`,
+      [searchTerm, total, req.user?.id || null,
+       req.headers['x-session-id'] || null,
+       category_id || null, tag_id || null]
+    ).catch(() => {});
+
     return sendSuccess(res, {
       query: searchTerm,
       articles: data,

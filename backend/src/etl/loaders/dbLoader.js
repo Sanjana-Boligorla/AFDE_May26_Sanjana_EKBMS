@@ -28,7 +28,7 @@ async function resolveTag(name, logger) {
 
   logger.log('info', `Tag: creating "${name}"`);
   const [r] = await pool.query(
-    'INSERT INTO tags (name, slug) VALUES (?, ?)',
+    'INSERT INTO tags (name, slug, created_by) VALUES (?, ?, 1)',
     [key, slugify(key)]
   );
   _tagCache[key] = r.insertId;

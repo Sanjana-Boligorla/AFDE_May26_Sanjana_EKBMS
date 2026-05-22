@@ -17,6 +17,8 @@ const notificationRoutes = require('./routes/notifications');
 const searchRoutes       = require('./routes/search');
 const dashboardRoutes    = require('./routes/dashboard');
 const userRoutes         = require('./routes/users');
+const analyticsRoutes    = require('./routes/analytics');
+const etlRoutes          = require('./routes/etl');
 
 const { errorHandler, notFound } = require('./middleware/errorHandler');
 
@@ -61,6 +63,8 @@ app.use('/api/notifications', notificationRoutes);
 app.use('/api/search',        searchRoutes);
 app.use('/api/dashboard',     dashboardRoutes);
 app.use('/api/users',         userRoutes);
+app.use('/api/analytics',     analyticsRoutes);
+app.use('/api/etl',           etlRoutes);
 
 // 404 and global error handler
 app.use(notFound);

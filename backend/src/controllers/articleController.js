@@ -173,8 +173,15 @@ const getArticle = async (req, res, next) => {
        FROM attachments WHERE article_id = ?`, [article.id]
     );
 
-    // Increment view count (fire and forget)
+    // Increment view count + track analytics event (fire and forget)
     pool.query('UPDATE articles SET view_count = view_count + 1 WHERE id = ?', [article.id]);
+    pool.query(
+      `INSERT INTO analytics_events (article_id, event_type, user_id, session_id, ip_address, user_agent)
+       VALUES (?, 'view', ?, ?, ?, ?)`,
+      [article.id, req.user?.id || null,
+       req.headers['x-session-id'] || null,
+       req.ip, (req.headers['user-agent'] || '').slice(0, 300)]
+    ).catch(() => {});
 
     return sendSuccess(res, { article: { ...article, tags, attachments } });
   } catch (err) { next(err); }
