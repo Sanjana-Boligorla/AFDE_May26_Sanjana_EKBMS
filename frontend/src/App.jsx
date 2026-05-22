@@ -22,6 +22,9 @@ import Bookmarks      from './pages/articles/Bookmarks';
 import ApprovalQueue      from './pages/admin/ApprovalQueue';
 import CategoryManagement from './pages/admin/CategoryManagement';
 import UserManagement     from './pages/admin/UserManagement';
+import TagManagement      from './pages/admin/TagManagement';
+import NotificationsPage  from './pages/notifications/NotificationsPage';
+import NotFound           from './pages/NotFound';
 import Profile            from './pages/auth/Profile';
 
 // Route guards
@@ -83,9 +86,15 @@ function AppRoutes() {
             <UserManagement />
           </RoleRoute>
         } />
+        <Route path="admin/tags" element={
+          <RoleRoute roles={['admin']}>
+            <TagManagement />
+          </RoleRoute>
+        } />
+        <Route path="notifications" element={<NotificationsPage />} />
       </Route>
 
-      <Route path="*" element={<Navigate to="/dashboard" replace />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }

@@ -1,190 +1,204 @@
-# Enterprise Knowledge Base Management System (EKBMS)
+# EKBMS — Enterprise Knowledge Base Management System
 
-> Capstone Project — AFDE_May26_Sanjana_EKBMS
+A full-stack web application for managing organizational knowledge. Built as a capstone project for the AFDE May 2026 batch.
 
-A full-stack enterprise-grade knowledge management platform that enables organizations to centralize, manage, and distribute knowledge resources across departments and teams.
-
----
-
-## 🚀 Features
-
-- **Role-Based Access Control** — Admin, Author, Reviewer, Employee, HR, Support
-- **Article Lifecycle Management** — Draft → Review → Approve → Publish → Archive
-- **Rich Text Editor** — Quill.js powered article creation with formatting support
-- **Hierarchical Categories** — Multi-level category and tag organization
-- **File Attachments** — Upload PDFs, DOCX, images linked to articles
-- **Approval Workflow** — Submit → Review → Approve/Reject with comments
-- **Search & Filtering** — Full-text search with category, tag, and author filters
-- **Collaboration** — Comments, star ratings, and bookmarks on articles
-- **Analytics Dashboard** — View counts, popular articles, search trends, user activity
-- **Version Control** — Complete edit history for every article
-- **Notifications** — In-app notifications for workflow events
+**Stack:** React 18 + Tailwind CSS · Node.js + Express · MySQL 8 · JWT Auth
 
 ---
 
-## 🛠️ Technology Stack
+## Features
 
-| Layer     | Technology                          |
-|-----------|--------------------------------------|
-| Frontend  | React.js + Tailwind CSS + Quill.js  |
-| Backend   | Node.js + Express.js                |
-| Database  | MySQL 8.0+                           |
-| Auth      | JWT (JSON Web Tokens) + bcryptjs     |
-| Files     | Multer (local disk storage)          |
-| Tools     | Postman, VS Code, GitHub             |
+| Module | Capabilities |
+|--------|-------------|
+| **Authentication** | Register, Login, JWT sessions, Profile management, Password change |
+| **Articles** | Rich text editor (Quill.js), versioning, lifecycle (draft → review → published → archived) |
+| **Categories** | Hierarchical (parent/child), icons, color coding |
+| **Tags** | Color-coded labels, usage tracking |
+| **Approvals** | Submit for review, assign reviewer, approve / reject / request revision |
+| **Search** | MySQL full-text search, suggestions, filters, sort options |
+| **Comments** | Threaded replies on published articles |
+| **Ratings** | 1–5 star ratings with rolling average |
+| **Bookmarks** | Save articles for later |
+| **Notifications** | Real-time in-app notifications for all workflow events |
+| **Attachments** | File uploads (PDF, images, docs) linked to articles |
+| **Dashboard** | Stats, category charts (Recharts), recent + popular articles |
+| **Admin** | User management, role assignment, category & tag CRUD |
 
 ---
 
-## 📁 Project Structure
+## Role Permissions
+
+| Role | Can Do |
+|------|--------|
+| **Admin** | Everything — user management, all content, categories, tags |
+| **Reviewer** | Review and approve/reject submitted articles |
+| **Author** | Create, edit, submit their own articles |
+| **Employee** | Read published articles, comment, rate, bookmark |
+
+---
+
+## Project Structure
 
 ```
-AFDE_May26_Sanjana_EKBMS/
-├── frontend/               # React + Tailwind CSS frontend
-│   └── src/
-│       ├── components/     # Reusable UI components
-│       ├── pages/          # Route-level page components
-│       ├── services/       # Axios API service calls
-│       ├── context/        # React Context (Auth, etc.)
-│       └── utils/          # Helper functions
-├── backend/                # Node.js + Express API
-│   └── src/
-│       ├── controllers/    # Business logic
-│       ├── routes/         # Express route definitions
-│       ├── middleware/     # Auth, validation, error handling
-│       ├── models/         # DB query helpers
-│       ├── config/         # DB, Multer configuration
-│       └── utils/          # Shared utilities
+Enterprise_Knowledge_base_management_system/
 ├── database/
-│   ├── schema.sql          # Full MySQL schema (21 tables)
-│   └── seed.sql            # Realistic sample data
-├── docs/                   # API documentation
-├── screenshots/            # UI screenshots
-├── README.md
-└── .gitignore
+│   ├── schema.sql          # 13-table MySQL schema
+│   └── seed.sql            # Sample data (10 users, 14 categories, 7 articles)
+├── backend/
+│   ├── src/
+│   │   ├── app.js          # Express app (CORS, routes, middleware)
+│   │   ├── server.js       # HTTP server entry point
+│   │   ├── config/
+│   │   │   ├── db.js       # MySQL2 connection pool
+│   │   │   └── multer.js   # File upload config
+│   │   ├── controllers/    # 13 controllers (auth, articles, approvals, ...)
+│   │   ├── routes/         # 13 route files
+│   │   ├── middleware/     # auth (protect/authorize/optionalAuth), errorHandler, validate
+│   │   └── utils/          # response helpers, slugify, pagination
+│   ├── uploads/            # Uploaded files (gitignored)
+│   ├── .env.example        # Copy to .env and fill in your values
+│   └── package.json
+└── frontend/
+    ├── public/index.html
+    ├── src/
+    │   ├── App.jsx             # Routes + guards (PrivateRoute, RoleRoute)
+    │   ├── context/AuthContext.jsx
+    │   ├── services/           # 11 axios service files
+    │   ├── components/
+    │   │   ├── common/         # Badge, Modal, Spinner, Pagination, EmptyState, ConfirmDialog
+    │   │   └── layout/         # Sidebar, Header, Layout
+    │   ├── pages/
+    │   │   ├── auth/           # Login, Register, Profile
+    │   │   ├── dashboard/      # Dashboard with charts
+    │   │   ├── articles/       # ArticleList, ArticleDetail, ArticleForm, MyArticles, Bookmarks
+    │   │   ├── admin/          # ApprovalQueue, CategoryManagement, TagManagement, UserManagement
+    │   │   ├── search/         # SearchResults
+    │   │   └── notifications/  # NotificationsPage
+    │   └── utils/helpers.js    # formatDate, timeAgo, STATUS_COLORS, truncate, stripHtml
+    └── package.json
 ```
 
 ---
 
-## ⚙️ Setup Instructions
+## Setup & Installation
 
 ### Prerequisites
-
-- Node.js >= 18.x
+- Node.js 18+
 - MySQL 8.0+
-- npm or yarn
+- npm
 
-### 1. Clone the Repository
-
+### 1. Clone the repository
 ```bash
 git clone https://github.com/Sanjana-Boligorla/AFDE_May26_Sanjana_EKBMS.git
 cd AFDE_May26_Sanjana_EKBMS
 ```
 
-### 2. Database Setup
-
+### 2. Create the database
 ```bash
-# Log in to MySQL
 mysql -u root -p
-
-# Run schema (creates database + all tables)
-SOURCE database/schema.sql;
-
-# Load sample data
-SOURCE database/seed.sql;
+```
+```sql
+CREATE DATABASE ekbms_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+EXIT;
+```
+```bash
+mysql -u root -p ekbms_db < database/schema.sql
+mysql -u root -p ekbms_db < database/seed.sql
 ```
 
-### 3. Backend Setup
-
+### 3. Configure the backend
 ```bash
 cd backend
-
-# Install dependencies
-npm install
-
-# Create environment file
 cp .env.example .env
-# Edit .env — set DB_PASSWORD and other values
+```
+Edit `.env` — set your MySQL password:
+```
+DB_PASSWORD=your_mysql_root_password
+```
 
-# Start development server
+### 4. Install & start the backend
+```bash
+cd backend
+npm install
 npm run dev
 ```
+Backend runs at `http://localhost:5000`  
+Health check: `http://localhost:5000/api/health`
 
-Backend runs at: `http://localhost:5000`
-
-### 4. Frontend Setup
-
+### 5. Install & start the frontend
 ```bash
 cd frontend
-
-# Install dependencies
 npm install
-
-# Start React development server
 npm start
 ```
-
-Frontend runs at: `http://localhost:3000`
-
----
-
-## 🔑 Default Test Accounts
-
-| Role     | Email                  | Password      |
-|----------|------------------------|---------------|
-| Admin    | admin@ekbms.com        | Password@123  |
-| Author   | sarah.c@ekbms.com      | Password@123  |
-| Reviewer | emily.r@ekbms.com      | Password@123  |
-| Employee | michael.b@ekbms.com    | Password@123  |
-| HR       | priya.s@ekbms.com      | Password@123  |
-| Support  | david.k@ekbms.com      | Password@123  |
+Frontend opens at `http://localhost:3000`
 
 ---
 
-## 📡 API Endpoints
+## Demo Accounts
 
-### Authentication
-| Method | Endpoint                    | Description              | Auth |
-|--------|-----------------------------|--------------------------|------|
-| POST   | `/api/auth/register`        | Register new user        | No   |
-| POST   | `/api/auth/login`           | Login and get JWT token  | No   |
-| POST   | `/api/auth/logout`          | Revoke session token     | Yes  |
-| GET    | `/api/auth/me`              | Get current user profile | Yes  |
-| PUT    | `/api/auth/me`              | Update profile           | Yes  |
-| PUT    | `/api/auth/change-password` | Change password          | Yes  |
+All accounts use password: **`Password@123`**
 
-*(More endpoints added in Milestone 2)*
-
----
-
-## 🗄️ Database Schema
-
-The database consists of **13 tables**:
-
-| Table               | Purpose                                        |
-|---------------------|------------------------------------------------|
-| roles               | System roles (Admin, Author, Reviewer, etc.)   |
-| users               | User accounts with role and department         |
-| categories          | Hierarchical article categories (parent_id)    |
-| tags                | Reusable article labels                        |
-| articles            | Core knowledge articles with view counter      |
-| article_tags        | Articles ↔ tags (many-to-many)                 |
-| article_versions    | Full edit history / version snapshots          |
-| attachments         | File attachments linked to articles            |
-| approval_workflows  | Article approval lifecycle with reviewer notes |
-| comments            | Threaded user comments on articles             |
-| article_ratings     | Star ratings (1–5) per user per article        |
-| bookmarks           | User saved/favourite articles                  |
-| notifications       | In-app notifications for workflow events       |
+| Role | Email |
+|------|-------|
+| Admin | admin@ekbms.com |
+| Reviewer | emily.r@ekbms.com |
+| Author | sarah.c@ekbms.com |
+| Author | john.doe@ekbms.com |
+| Employee | michael.b@ekbms.com |
+| Employee | alice.johnson@ekbms.com |
 
 ---
 
-## 📸 Screenshots
+## API Overview
 
-*(Added after frontend completion in Milestone 3)*
+All endpoints are prefixed with `/api`.
+
+| Resource | Endpoints |
+|----------|-----------|
+| Auth | `POST /auth/register` · `POST /auth/login` · `GET /auth/me` · `PUT /auth/me` · `PUT /auth/change-password` |
+| Articles | `GET /articles` · `POST /articles` · `GET /articles/:id` · `PUT /articles/:id` · `DELETE /articles/:id` · `POST /articles/:id/submit` · `POST /articles/:id/publish` · `POST /articles/:id/archive` · `GET /articles/:id/versions` · `GET /articles/my` |
+| Categories | `GET /categories` · `POST /categories` · `PUT /categories/:id` · `DELETE /categories/:id` |
+| Tags | `GET /tags` · `POST /tags` · `PUT /tags/:id` · `DELETE /tags/:id` |
+| Approvals | `GET /approvals` · `PUT /approvals/:id/assign` · `PUT /approvals/:id/approve` · `PUT /approvals/:id/reject` · `PUT /approvals/:id/revision` |
+| Comments | `GET /comments/article/:id` · `POST /comments/article/:id` · `PUT /comments/:id` · `DELETE /comments/:id` |
+| Ratings | `POST /ratings/article/:id` · `GET /ratings/article/:id` |
+| Bookmarks | `GET /bookmarks` · `POST /bookmarks/:articleId` · `DELETE /bookmarks/:articleId` |
+| Notifications | `GET /notifications` · `PUT /notifications/:id/read` · `PUT /notifications/read-all` |
+| Search | `GET /search?q=` · `GET /search/suggestions?q=` |
+| Dashboard | `GET /dashboard/stats` · `GET /dashboard/popular` · `GET /dashboard/recent` · `GET /dashboard/category-stats` |
+| Users (Admin) | `GET /users` · `PUT /users/:id` · `PUT /users/:id/toggle` · `GET /users/roles` |
+| Attachments | `POST /attachments/:articleId` · `GET /attachments/:id/download` · `DELETE /attachments/:id` |
 
 ---
 
-## 👩‍💻 Author
+## Database Schema
 
-**Sanjana** — AFDE Batch May 2026  
-GitHub: [Sanjana-Boligorla](https://github.com/Sanjana-Boligorla)
+13 tables: `roles` · `users` · `categories` · `tags` · `articles` · `article_tags` · `article_versions` · `attachments` · `approval_workflows` · `comments` · `article_ratings` · `bookmarks` · `notifications`
+
+Key design decisions:
+- **Stateless JWT** — no sessions table, token decoded on every request
+- **Hierarchical categories** — `parent_id` self-reference
+- **Full-text search** — MySQL `MATCH ... AGAINST` on `(title, content, summary)`
+- **Inline approval comments** — reviewer feedback stored directly on workflow row
+- **Denormalized ratings** — `avg_rating` and `rating_count` on articles table for fast reads
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Frontend | React 18, React Router v6, Tailwind CSS 3, Axios |
+| Editor | React-Quill (Quill.js) |
+| Charts | Recharts |
+| Notifications | react-hot-toast |
+| Backend | Node.js 18, Express 4 |
+| Database | MySQL 8 (mysql2/promise) |
+| Auth | JSON Web Tokens (jsonwebtoken + bcryptjs) |
+| File Uploads | Multer (disk storage, UUID filenames) |
+| Validation | express-validator |
+
+---
+
+*AFDE May 2026 — Sanjana Boligorla*
