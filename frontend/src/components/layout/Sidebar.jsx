@@ -94,6 +94,17 @@ export default function Sidebar({ open, onClose }) {
             </>
           )}
 
+          {/* Analytics (admin + reviewer) */}
+          {(isAdmin() || isReviewer()) && (
+            <>
+              <SectionLabel label="Analytics" />
+              <NavItem to="/analytics"        icon="📈" label="Analytics Dashboard" />
+              {isAdmin() && (
+                <NavItem to="/etl-jobs"       icon="⚙️" label="ETL Job Manager" />
+              )}
+            </>
+          )}
+
           {/* Admin only */}
           {isAdmin() && (
             <>
