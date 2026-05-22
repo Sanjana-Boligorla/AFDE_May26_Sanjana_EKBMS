@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { getArticles } from '../../services/articleService';
 import { getCategories } from '../../services/categoryService';
@@ -35,7 +35,7 @@ export default function ArticleList() {
       setLoading(true);
       try {
         const res = await getArticles(filters);
-        setArticles(res.data?.data?.articles || []);
+        setArticles(Array.isArray(res.data?.data) ? res.data.data : (res.data?.data?.articles || []));
         setPagination(res.data?.pagination || {});
       } catch {}
       finally { setLoading(false); }

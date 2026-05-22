@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+﻿import { useState, useEffect, useCallback } from 'react';
 import { toast } from 'react-hot-toast';
 import {
   MagnifyingGlassIcon, PencilIcon, CheckCircleIcon, XCircleIcon
@@ -38,8 +38,8 @@ export default function UserManagement() {
       setLoading(true);
       const params = { page, limit: 15, search, role: roleFilter, is_active: statusFilter };
       const data = await userService.getUsers(params);
-      setUsers(data.data?.users || []);
-      setPagination(data.pagination || {});
+      setUsers(data.data?.data?.users || []);
+      setPagination(data.data?.data?.pagination || {});
     } catch {
       toast.error('Failed to load users');
     } finally {
@@ -50,7 +50,7 @@ export default function UserManagement() {
   const fetchRoles = useCallback(async () => {
     try {
       const data = await userService.getRoles();
-      setRoles(data.data?.roles || []);
+      setRoles(data.data?.data?.roles || []);
     } catch {}
   }, []);
 

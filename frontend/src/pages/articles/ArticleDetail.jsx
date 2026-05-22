@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+﻿import { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import {
@@ -141,9 +141,9 @@ export default function ArticleDetail() {
     try {
       setLoading(true);
       const data = await articleService.getArticle(slug);
-      setArticle(data.data?.article);
-      setIsBookmarked(data.data?.article?.is_bookmarked || false);
-      setUserRating(data.data?.article?.user_rating || 0);
+      setArticle(data.data?.data?.article);
+      setIsBookmarked(data.data?.data?.article?.is_bookmarked || false);
+      setUserRating(data.data?.data?.article?.user_rating || 0);
     } catch (err) {
       toast.error('Article not found');
       navigate('/articles');
@@ -155,7 +155,7 @@ export default function ArticleDetail() {
   const fetchComments = useCallback(async (articleId) => {
     try {
       const data = await commentService.getComments(articleId);
-      setComments(data.data?.comments || []);
+      setComments(data.data?.data?.comments || []);
     } catch {}
   }, []);
 
@@ -264,7 +264,7 @@ export default function ArticleDetail() {
     if (!showVersions) {
       try {
         const data = await articleService.getVersions(article.id);
-        setVersions(data.data?.versions || []);
+        setVersions(data.data?.data?.versions || []);
       } catch {}
     }
     setShowVersions(!showVersions);

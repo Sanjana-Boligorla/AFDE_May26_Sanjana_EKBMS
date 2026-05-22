@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+﻿import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import {
@@ -40,8 +40,8 @@ export default function ApprovalQueue() {
     try {
       setLoading(true);
       const data = await approvalService.getApprovals({ status: statusFilter, page, limit: 10 });
-      setApprovals(data.data?.approvals || []);
-      setPagination(data.pagination || {});
+      setApprovals(data.data?.data?.approvals || []);
+      setPagination({});
     } catch {
       toast.error('Failed to load approvals');
     } finally {

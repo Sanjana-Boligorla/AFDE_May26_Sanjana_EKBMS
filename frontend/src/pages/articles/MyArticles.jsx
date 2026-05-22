@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+﻿import { useState, useEffect, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import {
@@ -42,8 +42,8 @@ export default function MyArticles() {
       setLoading(true);
       const params = { page, limit: 12, search, status: statusFilter };
       const data = await articleService.getMyArticles(params);
-      setArticles(data.data?.articles || []);
-      setPagination(data.pagination || {});
+      setArticles(Array.isArray(data.data?.data) ? data.data.data : (data.data?.data?.articles || []));
+      setPagination(data.data?.pagination || {});
     } catch {
       toast.error('Failed to load articles');
     } finally {

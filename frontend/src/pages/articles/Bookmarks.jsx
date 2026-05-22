@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+﻿import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import { BookmarkSlashIcon, EyeIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
@@ -21,8 +21,8 @@ export default function Bookmarks() {
     try {
       setLoading(true);
       const data = await bookmarkService.getBookmarks({ page, limit: 12 });
-      setBookmarks(data.data?.bookmarks || []);
-      setPagination(data.pagination || {});
+      setBookmarks(data.data?.data?.bookmarks || []);
+      setPagination({});
     } catch {
       toast.error('Failed to load bookmarks');
     } finally {

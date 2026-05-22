@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+﻿import { useState, useEffect, useCallback } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import {
@@ -83,8 +83,8 @@ export default function SearchResults() {
         limit: 10,
         ...filters,
       });
-      setResults(data.data?.results || []);
-      setPagination(data.pagination || {});
+      setResults(data.data?.data?.articles || []);
+      setPagination(data.data?.data?.pagination || {});
     } catch {
       toast.error('Search failed');
     } finally {

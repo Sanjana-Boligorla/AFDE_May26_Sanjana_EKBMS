@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+﻿import { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import ReactQuill from 'react-quill';
@@ -79,7 +79,7 @@ export default function ArticleForm() {
   const loadArticle = useCallback(async () => {
     try {
       const data = await articleService.getArticleById(id);
-      const a = data.data?.article;
+      const a = data.data?.data?.article;
       setForm({
         title: a.title || '',
         summary: a.summary || '',
@@ -129,7 +129,7 @@ export default function ArticleForm() {
       } else {
         const data = await articleService.createArticle(payload);
         toast.success('Article created!');
-        navigate(`/articles/${data.data?.article?.slug || ''}`);
+        navigate(`/articles/${data.data?.data?.article?.slug || ''}`);
       }
     } catch (err) {
       toast.error(err.response?.data?.message || 'Failed to save article');
