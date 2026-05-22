@@ -6,6 +6,38 @@ A full-stack web application for managing organizational knowledge. Built as a c
 
 ---
 
+## Screenshots
+
+| Login | Dashboard |
+|-------|-----------|
+| ![Login](screenshots/01-login.png) | ![Dashboard](screenshots/02-dashboard.png) |
+
+| All Articles | Article Detail |
+|-------------|----------------|
+| ![Articles](screenshots/03-all-articles.png) | ![Article Detail](screenshots/04-article-detail.png) |
+
+| New Article Editor | My Articles |
+|-------------------|-------------|
+| ![New Article](screenshots/05-new-article.png) | ![My Articles](screenshots/06-my-articles.png) |
+
+| Search Results | Notifications |
+|---------------|---------------|
+| ![Search](screenshots/07-search.png) | ![Notifications](screenshots/08-notifications.png) |
+
+| Approval Queue | Analytics Dashboard |
+|---------------|---------------------|
+| ![Approval Queue](screenshots/10-approval-queue.png) | ![Analytics](screenshots/11-analytics.png) |
+
+| ETL Job Manager | Admin — Users |
+|----------------|---------------|
+| ![ETL Jobs](screenshots/12-etl-jobs.png) | ![Users](screenshots/15-users.png) |
+
+| Admin — Categories | Admin — Tags |
+|-------------------|-------------|
+| ![Categories](screenshots/13-categories.png) | ![Tags](screenshots/14-tags.png) |
+
+---
+
 ## Features
 
 | Module | Capabilities |
@@ -122,8 +154,8 @@ cd backend
 npm install
 npm run dev
 ```
-Backend runs at `http://localhost:5000`  
-Health check: `http://localhost:5000/api/health`
+Backend runs at `http://localhost:8000`  
+Health check: `http://localhost:8000/api/health`
 
 ### 5. Install & start the frontend
 ```bash

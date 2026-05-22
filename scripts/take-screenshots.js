@@ -37,18 +37,21 @@ async function login(page) {
 }
 
 const pages = [
-  { name: 'login',               path: '/login',           file: 'login.png',               auth: false },
-  { name: 'dashboard',           path: '/',                file: 'dashboard.png',            auth: true  },
-  { name: 'all-articles',        path: '/articles',        file: 'all-articles.png',         auth: true  },
-  { name: 'article-detail',      path: '/articles/1',      file: 'article-detail.png',       auth: true  },
-  { name: 'new-article',         path: '/articles/new',    file: 'new-article.png',          auth: true  },
-  { name: 'my-articles',         path: '/my-articles',     file: 'my-articles.png',          auth: true  },
-  { name: 'bookmarks',           path: '/bookmarks',       file: 'bookmarks.png',            auth: true  },
-  { name: 'search',              path: '/search',          file: 'search.png',               auth: true  },
-  { name: 'notifications',       path: '/notifications',   file: 'notifications.png',        auth: true  },
-  { name: 'approval-queue',      path: '/admin/approvals', file: 'approval-queue.png',       auth: true  },
-  { name: 'category-management', path: '/admin/categories',file: 'category-management.png',  auth: true  },
-  { name: 'user-management',     path: '/admin/users',     file: 'user-management.png',      auth: true  },
+  { name: 'login',               path: '/login',            file: '01-login.png',              auth: false },
+  { name: 'dashboard',           path: '/dashboard',        file: '02-dashboard.png',          auth: true  },
+  { name: 'all-articles',        path: '/articles',         file: '03-all-articles.png',       auth: true  },
+  { name: 'article-detail',      path: '/articles/1',       file: '04-article-detail.png',     auth: true  },
+  { name: 'new-article',         path: '/articles/new',     file: '05-new-article.png',        auth: true  },
+  { name: 'my-articles',         path: '/my-articles',      file: '06-my-articles.png',        auth: true  },
+  { name: 'search',              path: '/search?q=security',file: '07-search.png',             auth: true  },
+  { name: 'notifications',       path: '/notifications',    file: '08-notifications.png',      auth: true  },
+  { name: 'bookmarks',           path: '/bookmarks',        file: '09-bookmarks.png',          auth: true  },
+  { name: 'approval-queue',      path: '/approval-queue',   file: '10-approval-queue.png',     auth: true  },
+  { name: 'analytics',           path: '/analytics',        file: '11-analytics.png',          auth: true  },
+  { name: 'etl-jobs',            path: '/etl-jobs',         file: '12-etl-jobs.png',           auth: true  },
+  { name: 'category-management', path: '/admin/categories', file: '13-categories.png',         auth: true  },
+  { name: 'tag-management',      path: '/admin/tags',       file: '14-tags.png',               auth: true  },
+  { name: 'user-management',     path: '/admin/users',      file: '15-users.png',              auth: true  },
 ]
 
 ;(async () => {
